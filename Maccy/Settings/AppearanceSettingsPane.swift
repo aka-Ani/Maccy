@@ -9,6 +9,8 @@ struct AppearanceSettingsPane: View {
   @Default(.pinTo) private var pinTo
   @Default(.imageMaxHeight) private var imageHeight
   @Default(.previewDelay) private var previewDelay
+  @Default(.previewMaxHeight) private var previewMaxHeight
+  @Default(.maxWindowHeight) private var maxWindowHeight
   @Default(.highlightMatch) private var highlightMatch
   @Default(.menuIcon) private var menuIcon
   @Default(.showInStatusBar) private var showInStatusBar
@@ -45,6 +47,20 @@ struct AppearanceSettingsPane: View {
     let formatter = NumberFormatter()
     formatter.minimum = 200
     formatter.maximum = 100_000
+    return formatter
+  }()
+
+  private let previewMaxHeightFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.minimum = 100
+    formatter.maximum = 2000
+    return formatter
+  }()
+
+  private let maxWindowHeightFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.minimum = 200
+    formatter.maximum = 2000
     return formatter
   }()
 
@@ -90,6 +106,16 @@ struct AppearanceSettingsPane: View {
         .help(Text("PinToTooltip", tableName: "AppearanceSettings"))
       }
 
+      Settings.Section(label: { Text("MaxWindowHeight", tableName: "AppearanceSettings") }) {
+        HStack {
+          TextField("", value: $maxWindowHeight, formatter: maxWindowHeightFormatter)
+            .frame(width: 120)
+            .help(Text("MaxWindowHeightTooltip", tableName: "AppearanceSettings"))
+          Stepper("", value: $maxWindowHeight, in: 200...2000)
+            .labelsHidden()
+        }
+      }
+
       Settings.Section(label: { Text("ImageHeight", tableName: "AppearanceSettings") }) {
         HStack {
           TextField("", value: $imageHeight, formatter: imageHeightFormatter)
@@ -106,6 +132,16 @@ struct AppearanceSettingsPane: View {
             .frame(width: 120)
             .help(Text("PreviewDelayTooltip", tableName: "AppearanceSettings"))
           Stepper("", value: $previewDelay, in: 200...100_000)
+            .labelsHidden()
+        }
+      }
+
+      Settings.Section(label: { Text("PreviewMaxHeight", tableName: "AppearanceSettings") }) {
+        HStack {
+          TextField("", value: $previewMaxHeight, formatter: previewMaxHeightFormatter)
+            .frame(width: 120)
+            .help(Text("PreviewMaxHeightTooltip", tableName: "AppearanceSettings"))
+          Stepper("", value: $previewMaxHeight, in: 100...2000)
             .labelsHidden()
         }
       }

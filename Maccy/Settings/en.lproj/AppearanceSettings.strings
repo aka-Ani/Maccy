@@ -14,10 +14,14 @@
 "PinToTop" = "Top";
 "PinToBottom" = "Bottom";
 "PinToTooltip" = "Change the location of pinned items.\nDefault: Top.";
+"MaxWindowHeight" = "Popup max height:";
+"MaxWindowHeightTooltip" = "Maximum height of the popup window in pixels.\nDefault: 800.";
 "ImageHeight" = "Image height:";
 "ImageHeightTooltip" = "Maximum image preview height.\nDefault: 40.\nHint: Set to 16 to look like text items.";
 "PreviewDelay" = "Preview delay:";
 "PreviewDelayTooltip" = "Delay in milliseconds until a preview popup is shown.\nDefault: 1500.";
+"PreviewMaxHeight" = "Preview max height:";
+"PreviewMaxHeightTooltip" = "Maximum height of image preview popup in pixels.\nDefault: 500.";
 "HighlightMatches" = "Highlight matches:";
 "HighlightMatchColor" = "Color";
 "HighlightMatchBold" = "Bold";

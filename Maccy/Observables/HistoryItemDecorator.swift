@@ -11,7 +11,11 @@ class HistoryItemDecorator: Identifiable, Hashable {
   }
 
   static var previewThrottler = Throttler(minimumDelay: Double(Defaults[.previewDelay]) / 1000)
-  static var previewImageSize: NSSize { NSScreen.forPopup?.visibleFrame.size ?? NSSize(width: 2048, height: 1536) }
+  static var previewImageSize: NSSize {
+    let maxHeight = CGFloat(Defaults[.previewMaxHeight])
+    let screenWidth = NSScreen.forPopup?.visibleFrame.width ?? 2048
+    return NSSize(width: screenWidth, height: maxHeight)
+  }
   static var thumbnailImageSize: NSSize { NSSize(width: 340, height: Defaults[.imageMaxHeight]) }
 
   let id = UUID()
@@ -23,8 +27,10 @@ class HistoryItemDecorator: Identifiable, Hashable {
   var isSelected: Bool = false {
     didSet {
       if isSelected {
+        Task { @MainActor in
+          ensurePreviewImage()
+        }
         Self.previewThrottler.throttle {
-          Self.previewThrottler.minimumDelay = 0.2
           self.showPreview = true
         }
       } else {
